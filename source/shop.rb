@@ -1,6 +1,5 @@
-require_relative 'location.rb'
 require_relative 'player.rb'
-
+require_relative 'location.rb'
 class Shop < Location
 	attr_accessor :items_on_sale, :actions, :name, :location
 	
@@ -23,35 +22,62 @@ class Shop < Location
 
 	def show_actions
 		super
-		unless @actions.count < 1
-			@actions.each_with_index do |action, i|
-				puts "#{i + 1} - #{action.to_s}"
-			end
-			option = gets.strip.to_i
-			if option <= @actions.count
-				send(actions[option - 1])
-			end
+		#unless @actions.count < 1
+		#	@actions.each_with_index do |action, i|
+		#		puts "#{i + 1} - #{action.to_s}"
+		#	end
+		#	option = gets.strip.to_i
+		#	if option <= @actions.count
+		#		send(actions[option - 1])
+		#	end
+		#end
+		print_actions @actions
+		select_option @actions do |option|
+			send(@actions[option])
 		end
 	end
 
 	def buy
 		system("clear")
-		if @items_on_sale.count > 0
-			@items_on_sale.each_with_index do |item, i|
-				puts "#{i + 1} - #{item.name} - #{item.cost} -  #{item.rarity}"
-			end
-			puts "#{@items_on_sale.count + 1} - exit"
-			option = gets.strip.to_i 
-			unless option > @items_on_sale.count
-				sell_item option - 1
-				buy
-			else 
-				Player.change_location self
-			end
-		else
-			puts "Theres nothing on sale."
+		#if @items_on_sale.count > 0
+		#	@items_on_sale.each_with_index do |item, i|
+		#		puts "#{i + 1} - #{item.name} - #{item.cost} -  #{item.rarity}"
+		#	end
+		#	puts "#{@items_on_sale.count + 1} - exit"
+		#	option = gets.strip.to_i 
+		#	unless option > @items_on_sale.count
+		#		sell_item option - 1
+		#		buy
+		#	else 
+		#		Player.change_location self
+		#	end
+		#else
+		#	puts "Theres nothing on sale."
+		#	gets
+		#end
+		print_actions @items_on_sale
+		puts "#{@items_on_sale.count + 1} - exit"
+		if @items_on_sale.count == 0
+			puts "There's nothing on sale."
 			gets
+		else
+			select_option @items_on_sale do |option|
+				unless option >= @items_on_sale.count
+					sell_item option
+					buy
+				else
+					Player.change_location self
+				end
+			end
 		end
+	end
+
+	def inspect
+		to_s
+	end
+
+	def to_s
+		@name
 	end
 
 	def exit

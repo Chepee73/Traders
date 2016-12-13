@@ -7,4 +7,11 @@ class Item
 		@name = name
 	end
 	
+	def inspect
+		to_s
+	end
+	
+	def to_s
+		"#{@name} - #{@rarity} - #{@cost}"
+	end
 end
