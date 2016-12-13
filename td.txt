@@ -1,0 +1,14 @@
+Jugador:
+	- Inventorio
+	- Fondos Disponibles
+	- Habilidad de viajar entre ciudades
+	- Habilidad de comprar items
+
+Items
+	- Valor
+	- Rareza
+
+Ciudades
+	- Religion 
+	- Items prohibidos
+	- Tiendas

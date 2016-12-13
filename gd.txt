@@ -1,0 +1,31 @@
+Idea principal:
+	- El jugador tiene que viajar de pueblo a pueblo comprando y vendiendo bienes
+
+
+Sinopsis:
+Juego de comercio ambientado en un futuro medieval.
+
+
+Ideas:
+	- Items:
+		- Raros: Reliquias, etc
+		- Comunes: Comida, Ropa, etc
+		- Legendarios: Espadas magicas, animales que hablan.
+	- Ciudades:
+			- Las ciudades tienen diferentes tipos de impuestos a ciertos items y cuotas de entrada, y para esquivar las cuotas se puede entrar cosas sin declararlas (contrabando)	
+			- Segun la religion de las ciudades tambien varian los costos e items disponibles.
+
+Flujo:
+	- El jugador ve en pantalla un menu de opciones de accion.
+	- Y en cada turno debe elegir una accion.
+	Acciones:
+		En el mapa:
+			- Entrar a la ciudad
+				- Entrar de manera oficial pagando el valor necesario
+				- Entrar de manera ilegal, gratis pero con riesgo de game over.
+			- Viajar a otra ciudad
+		En una ciudad:
+			- Se presenta una lista de tiendas:
+				- El jugar elige una tienda:
+					En una tienda:
+						- Hay una lista de items, el jugador puede comprar cuantos items quiera mientras tenga dinero y espacio en el inventario. Además puede vender todos los items "legales" o negociar los.
