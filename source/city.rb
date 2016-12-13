@@ -2,11 +2,12 @@ require_relative 'location.rb'
 require_relative 'map.rb'
 
 class City < Location
-	attr_accessor :shops, :actions
-	def initialize shops = [], actions = [:shops, :exit]
+	attr_accessor :shops, :actions, :neighbours, :name
+	def initialize name = "City", shops = [], actions = [:shops, :exit], neighbours = []
+		@name = name
 		@shops = shops
 		@actions = actions	
-
+		@neighbours = neighbours
 		@shops.each do |shop|
 			shop.location = self
 		end
@@ -22,18 +23,6 @@ class City < Location
 
 	def shops
 		system("clear")
-		#unless @shops.count < 1
-		#	@shops.each_with_index do |shop, i|
-		#		puts "#{i + 1} - #{shop.name}"
-		#	end
-		#	puts "#{@shops.count + 1} - exit"
-		#	option = gets.strip.to_i
-		#	unless option > @shops.count
-		#		Player.change_location @shops[option - 1]
-		#	else
-		#		Player.change_location self
-		#	end
-		#end
 		print_actions @shops
 		puts "#{@shops.count + 1} - exit"
 		select_option @shops do |option|
@@ -48,4 +37,18 @@ class City < Location
 	def exit
 		Player.change_location Map.actual_map
 	end
+
+	def add_neighbour city
+		@neighbours << city unless @neighbours.include? city
+		city.neighbours << self unless city.neighbours.include? self
+	end
+
+	def inspect
+		to_s
+	end
+
+	def to_s
+		@name
+	end
+
 end

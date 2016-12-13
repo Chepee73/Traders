@@ -19,9 +19,7 @@ class Location
 	def select_option options, &block
 		if block_given?
 			option = gets.strip.to_i
-			if option <= options.count
-				yield option - 1
-			end
+			yield option - 1
 		end
 	end
 

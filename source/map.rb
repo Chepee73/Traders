@@ -1,5 +1,3 @@
-require 'gratr/import'
-
 class Map < Location
 	attr_accessor :cities, :actual_city
 
@@ -11,7 +9,7 @@ class Map < Location
 		@actual_map
 	end
 
-	def initialize cities = {}, actual_city = nil
+	def initialize cities = [], actual_city = nil
 		@cities = cities
 		@actual_city = actual_city
 	end
@@ -21,25 +19,35 @@ class Map < Location
 	end
 
 	def add_route_from(city_a, city_b)
-		@cities[city_a].neightbours << city_b
 	end
 
 	def get_routes_from(city)
-		@cities[city].neighbours
+		city.neighbours
 	end
 
 	def show_actions
 		super
 		# Couldn't think of another name. be careful with the @
-		cities = []
-		@cities.each_with_index do |(city_name, city_location), i|
-			print "#{i + 1} - #{city_name}  \n"
-			cities << city_location
-		end 
-		option = gets.to_i
-		unless option > cities.count
-			Player.change_location(cities[option - 1])
-			@actual_city = cities[option - 1]
+		#cities = []
+		#@cities.each_with_index do |(city_name, city_location), i|
+		#	print "#{i + 1} - #{city_name}  \n"
+		#	cities << city_location
+		#end 
+		#select_option cities do |option|
+		#	Player.change_location(cities[option])
+		#	@actual_city = cities[option]
+		#end
+		unless @actual_city.nil?
+			routes = get_routes_from(@actual_city)
+			print_actions routes
+			puts "#{routes.count + 1} - Enter city"
+			select_option routes do |option|
+				if option < routes.count
+					@actual_city = routes[option]
+				else
+					Player.change_location @actual_city
+				end				
+			end
 		end
 	end
 end
