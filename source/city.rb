@@ -1,8 +1,9 @@
 require_relative 'location.rb'
+require_relative 'map.rb'
 
 class City < Location
 	attr_accessor :shops, :actions
-	def initialize shops = [], actions = [:shops]
+	def initialize shops = [], actions = [:shops, :exit]
 		@shops = shops
 		@actions = actions	
 
@@ -30,11 +31,17 @@ class City < Location
 			@shops.each_with_index do |shop, i|
 				puts "#{i + 1} - #{shop.name}"
 			end
+			puts "#{@shops.count + 1} - exit"
 			option = gets.strip.to_i
 			unless option > @shops.count
 				Player.change_location @shops[option - 1]
+			else
+				Player.change_location self
 			end
 		end	
 	end
-
+	
+	def exit
+		Player.change_location Map.actual_map
+	end
 end

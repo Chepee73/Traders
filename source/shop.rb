@@ -38,11 +38,16 @@ class Shop < Location
 		system("clear")
 		if @items_on_sale.count > 0
 			@items_on_sale.each_with_index do |item, i|
-				puts "#{i + 1} - #{item.name} - #{item.rarity}"
+				puts "#{i + 1} - #{item.name} - #{item.cost} -  #{item.rarity}"
 			end
+			puts "#{@items_on_sale.count + 1} - exit"
 			option = gets.strip.to_i 
-			sell_item option - 1
-			buy
+			unless option > @items_on_sale.count
+				sell_item option - 1
+				buy
+			else 
+				Player.change_location self
+			end
 		else
 			puts "Theres nothing on sale."
 			gets
